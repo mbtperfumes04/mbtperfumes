@@ -32,7 +32,7 @@ class _HomeState extends State<Home> {
         children: [
           Container(
             decoration: const BoxDecoration(
-              color: Colors.red
+              color: Colors.green
             ),
             padding: EdgeInsets.only(
               left: screenWidth * 0.05,
