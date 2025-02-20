@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:mbtperfumes/main.dart';
+import 'package:mbtperfumes/models/user_model.dart';
 
 import '../customs/custom_body.dart';
 import '../globals.dart';
@@ -12,12 +14,19 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
+  UserModel? user;
   @override
   void initState() {
     super.initState();
     removeSplash();
 
+    fetchUsername();
+  }
+
+  void fetchUsername () async {
+    final data = await supabase.from('test').select('*').single();
+
+    user = UserModel.fromMap(data);
   }
 
   void removeSplash() async {
@@ -55,7 +64,7 @@ class _HomeState extends State<Home> {
                 ),
                 Column(
                   children: [
-                    Text('test'),
+                    Text(user?.name ?? ''),
                     Text('test2yhygygy')
                   ],
                 )
