@@ -138,11 +138,21 @@ class _ProductViewState extends State<ProductView> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text('0.0',
-                                      style: TextStyle(
-                                          fontSize: screenWidth * 0.045,
-                                          fontWeight: FontWeight.w300
-                                      ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text('4.3',
+                                          style: TextStyle(
+                                              fontSize: screenWidth * 0.045,
+                                              fontWeight: FontWeight.w300
+                                          ),
+                                        ),
+                                        SizedBox(width: screenWidth * 0.01),
+                                        Icon(Icons.star,
+                                          size: screenWidth * 0.04,
+                                          color: Colors.orange,
+                                        )
+                                      ],
                                     ),
                                     Text('ratings',
                                     style: TextStyle(

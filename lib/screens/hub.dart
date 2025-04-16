@@ -20,32 +20,37 @@ class _HubState extends State<Hub> {
     required int id,
     required String title,
     required String svg,
+    required Alignment alignment
   }) {
-    return InkWell(
-      onTap: () {
-
-        setState(() {
-          selectedIndex = id;
-        });
-
-        pageController.jumpToPage(selectedIndex);
-      },
-      child: Container(
-        child: Column(
-          children: [
-            SvgPicture.asset('assets/svgs/general/$svg.svg',
-              colorFilter: ColorFilter.mode(
-                selectedIndex == id ? Colors.black : Colors.grey,
-                BlendMode.srcIn
+    return Expanded(
+      child: InkWell(
+        onTap: () {
+      
+          setState(() {
+            selectedIndex = id;
+          });
+      
+          pageController.jumpToPage(selectedIndex);
+        },
+        child: Container(
+          // color: Colors.red,
+          alignment: alignment,
+          child: Column(
+            children: [
+              SvgPicture.asset('assets/svgs/general/$svg.svg',
+                colorFilter: ColorFilter.mode(
+                  selectedIndex == id ? Colors.black : Colors.grey,
+                  BlendMode.srcIn
+                ),
               ),
-            ),
-            Text(title,
-              style: TextStyle(
-                fontSize: screenWidth * 0.03,
-                color: selectedIndex == id ? Colors.black : Colors.grey
-              ),
-            )
-          ],
+              Text(title,
+                style: TextStyle(
+                  fontSize: screenWidth * 0.03,
+                  color: selectedIndex == id ? Colors.black : Colors.grey
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -64,6 +69,11 @@ class _HubState extends State<Hub> {
           Expanded(
             child: PageView(
               controller: pageController,
+              onPageChanged: (val) {
+                setState(() {
+                  selectedIndex = val;
+                });
+              },
               children: [
                 const Home(),
                 const Activity(),
@@ -87,17 +97,20 @@ class _HubState extends State<Hub> {
                 navItem(
                   id: 0,
                   title: 'Home',
-                  svg: 'home'
+                  svg: 'home',
+                  alignment: Alignment.centerLeft
                 ),
                 navItem(
                     id: 1,
                     title: 'Activity',
-                    svg: 'activity'
+                    svg: 'activity',
+                  alignment: Alignment.center
                 ),
                 navItem(
                     id: 2,
                     title: 'Account',
-                    svg: 'activity'
+                    svg: 'account',
+                  alignment: Alignment.centerRight
                 )
               ],
             ),

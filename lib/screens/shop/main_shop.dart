@@ -35,7 +35,16 @@ class _MainShopState extends State<MainShop> {
         appBar: SliverAppBar(
           backgroundColor: const Color(0xFFf9efef),
           scrolledUnderElevation: 0,
-          title: Text(('Shop'))
+          title: Text(('Shop')),
+          centerTitle: true,
+          actions: [
+            InkWell(
+              onTap: () {
+                print('Filtering');
+              },
+              child: Icon(Icons.filter_list_rounded)),
+            SizedBox(width: screenWidth * 0.05)
+          ],
         ),
         children: [
           Container(
@@ -57,8 +66,8 @@ class _MainShopState extends State<MainShop> {
               },
               activeStyle: TextStyle( // TextStyle
                 color: Colors.white,
-                fontWeight: FontWeight.w700,
-                fontSize: screenWidth * 0.04,
+                fontWeight: FontWeight.w600,
+                fontSize: screenWidth * 0.038,
                 fontFamily: 'Poppins'
               ),
               inactiveStyle: TextStyle( // TextStyle
@@ -68,12 +77,12 @@ class _MainShopState extends State<MainShop> {
                   fontFamily: 'Poppins'
               ),
               sliderDecoration: BoxDecoration(
-                color: Colors.black,
+                color: const Color(0xffad2d2f),
                 borderRadius: BorderRadius.circular(30)
               ),
               backgroundColor: Colors.transparent, // Color
               sliderColor: Colors.white, // Color
-              sliderOffset: 2.0, // Double
+              sliderOffset: 4.0, // Double
               borderRadius: const BorderRadius.all(Radius.circular(8.0)), // BorderRadius
               itemPadding: EdgeInsets.symmetric( // EdgeInsets
                 horizontal: 15,

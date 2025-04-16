@@ -197,7 +197,9 @@ class _HomeState extends State<Home> {
                       ),
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                              image: AssetImage('assets/images/general/profilepic2.jpeg'),
+                              image: supabase.auth.currentUser != null && supabase.auth.currentUser?.userMetadata?['avatar'] != null ?
+                                NetworkImage(supabase.auth.currentUser?.userMetadata?['avatar']) :
+                                AssetImage('assets/images/general/profilepic2.jpeg'),
                               fit: BoxFit.cover
                           ),
                           borderRadius: BorderRadius.circular(100)
@@ -208,14 +210,14 @@ class _HomeState extends State<Home> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Hi, Sharraine!',
+                        Text('Hi, ${supabase.auth.currentUser != null ? supabase.auth.currentUser?.userMetadata!['username'] : 'User'}!',
                           style: TextStyle(
                               fontSize: screenWidth * 0.05,
                               fontWeight: FontWeight.w500
                           ),
                         ),
                         SizedBox(height: screenHeight * 0.003,),
-                        Text('Welcome Back',
+                        Text('Welcome',
                           style: TextStyle(
                               color: const Color(0xff808080),
                               fontSize: screenWidth * 0.035

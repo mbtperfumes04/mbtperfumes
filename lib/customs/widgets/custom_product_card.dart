@@ -60,18 +60,24 @@ class _PerfumeCardState extends State<PerfumeCard> {
                 children: [
                   Text('₱${widget.price}',
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF808080),
                       fontSize: screenWidth * 0.035,
                     ),
                   ),
-                  SizedBox(width: screenWidth * 0.02),
-                  Text('₱${widget.oldPrice}',
-                    style: TextStyle(
-                      decoration: TextDecoration.lineThrough,
-                      color: Colors.grey,
-                      fontSize: screenWidth * 0.03,
-                    ),
-                  )
+                  if(widget.oldPrice != null)
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: screenWidth * 0.02
+                      ),
+                      child: Text('₱${widget.oldPrice}',
+                        style: TextStyle(
+                          decoration: TextDecoration.lineThrough,
+                          color: Colors.grey,
+                          fontSize: screenWidth * 0.03,
+                        ),
+                      ),
+                    )
                 ],
               ),
               Align(
