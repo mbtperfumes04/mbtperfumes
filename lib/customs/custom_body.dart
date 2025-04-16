@@ -23,9 +23,6 @@ class _CustomBodyState extends State<CustomBody> {
     return Container(
       height: screenHeight,
       width: screenWidth,
-      padding: EdgeInsets.only(
-        bottom: screenHeight * 0.03
-      ),
       decoration: BoxDecoration(
         gradient: RadialGradient(
           colors: [
