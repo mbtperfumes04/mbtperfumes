@@ -39,14 +39,21 @@ dependencies:
   flutter_svg: ^2.0.17
   flutter_native_splash: ^2.4.4
   supabase_flutter: ^2.8.3
+  flutter_staggered_grid_view: ^0.7.0
+  animated_segmented_tab_control: ^2.0.0
+  segmented_button_slide: ^2.0.0
+  custom_sliding_segmented_control: ^1.8.5
+  flutter_advanced_segment: ^3.0.2
+  sliding_up_panel2: ^3.3.0+1
+  otp_pin_field: ^1.4.1
 
 flutter_native_splash:
   color: "#F6F0DE"
   android: true
   ios: true
   android_12:
-    image: "assets/images/general/LogoScentopia.png"
-  image_ios: "assets/images/general/LogoScentopia.png"
+    image: "assets/images/general/MBTLogo2.png"
+  image_ios: "assets/images/general/MBTLogo2.png"
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +84,57 @@ flutter:
 
   assets:
     - assets/images/general/
+    - assets/images/perfumes/
+    - assets/svgs/general/
+
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins/Poppins-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/Poppins/Poppins-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/Poppins/Poppins-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Poppins/Poppins-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Poppins/Poppins-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Poppins/Poppins-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Poppins/Poppins-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Poppins/Poppins-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/Poppins/Poppins-Black.ttf
+          weight: 900
+        - asset: assets/fonts/Poppins/Poppins-ThinItalic.ttf
+          weight: 100
+          style: italic
+        - asset: assets/fonts/Poppins/Poppins-ExtraLightItalic.ttf
+          weight: 200
+          style: italic
+        - asset: assets/fonts/Poppins/Poppins-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/Poppins/Poppins-Italic.ttf
+          weight: 400
+          style: italic
+        - asset: assets/fonts/Poppins/Poppins-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: assets/fonts/Poppins/Poppins-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/Poppins/Poppins-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/Poppins/Poppins-ExtraBoldItalic.ttf
+          weight: 800
+          style: italic
+        - asset: assets/fonts/Poppins/Poppins-BlackItalic.ttf
+          weight: 900
+          style: italic
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
