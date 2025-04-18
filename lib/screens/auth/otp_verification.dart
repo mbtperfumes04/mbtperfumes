@@ -8,6 +8,7 @@ import 'package:mbtperfumes/screens/auth/account_created.dart';
 import 'package:otp_pin_field/otp_pin_field.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../globals.dart';
+import '../hub.dart';
 
 class OtpVerification extends StatefulWidget {
   final String email;
@@ -202,6 +203,12 @@ class _OtpVerificationState extends State<OtpVerification> {
                 );
 
                 print(data);
+
+                if (supabase.auth.currentUser?.userMetadata?['username'] != null) {
+                  Get.offAll(() => const Hub());
+
+                  return;
+                }
                 Get.offAll(() => const AccountCreated());
               } catch(e) {
                 print('Exception: $e');

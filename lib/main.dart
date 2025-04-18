@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
+import 'package:mbtperfumes/providers/cart_provider.dart';
 import 'package:mbtperfumes/providers/category_provider.dart';
 import 'package:mbtperfumes/providers/product_provider.dart';
 import 'package:mbtperfumes/screens/home.dart';
@@ -31,7 +32,8 @@ void main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => CategoryProvider()),
-      ChangeNotifierProvider(create: (_) => ProductProvider())
+      ChangeNotifierProvider(create: (_) => ProductProvider()),
+      ChangeNotifierProvider(create: (_) => CartProvider())
     ],
     child: const Start(),
   ));

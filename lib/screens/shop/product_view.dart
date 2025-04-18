@@ -6,7 +6,10 @@ import 'package:mbtperfumes/globals.dart';
 import 'package:mbtperfumes/main.dart';
 import 'package:mbtperfumes/models/product_model.dart';
 import 'package:mbtperfumes/screens/auth/login_signup.dart';
+import 'package:provider/provider.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';
+
+import '../../providers/cart_provider.dart';
 
 class ProductView extends StatefulWidget {
   final ProductModel product;
@@ -24,6 +27,8 @@ class _ProductViewState extends State<ProductView> {
 
   int selectedSize = 0;
   int initialQty = 1;
+
+  bool isLoading = false;
 
   Widget infoBox({
     required Widget child
@@ -45,11 +50,19 @@ class _ProductViewState extends State<ProductView> {
     super.initState();
 
     sizesButton = widget.product.perfumeType == 'Basic' ? [10, 50, 85] : [150];
+
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
+
+    if (cartProvider.items.any((item) => item.productId == widget.product.id)) {
+      initialQty = cartProvider.items.where((i) => i.productId == widget.product.id).first.quantity;
+    }
   }
 
 
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
+
     return Scaffold(
       body: Stack(
         children: [
@@ -277,8 +290,67 @@ class _ProductViewState extends State<ProductView> {
                          )
                        ],
                      )
-                   )
-
+                   ),
+                   if(cartProvider.items.any((item) => item.productId == widget.product.id))
+                     Container(
+                       margin: EdgeInsets.only(
+                         top: screenHeight * 0.05,
+                         bottom: cartProvider.items.any((item) => item.productId == widget.product.id) ? screenHeight * 0.1 : 0
+                       ),
+                       child: Row(
+                         children: [
+                           InkWell(
+                             onTap: () {
+                               if(initialQty > 0) {
+                                 setState(() {
+                                   initialQty--;
+                                 });
+                               }
+                             },
+                             child: Container(
+                               decoration: BoxDecoration(
+                                 color: Theme.of(context).colorScheme.primary,
+                                 shape: BoxShape.circle
+                               ),
+                               child: Icon(
+                                 Icons.remove,
+                                 size: screenWidth * 0.06,
+                                 color: Colors.white,
+                               )
+                             ),
+                           ),
+                           Container(
+                             width: screenWidth * 0.22,
+                             alignment: Alignment.center,
+                             child: Text(initialQty.toString(),
+                               style: TextStyle(
+                                   color: Colors.black,
+                                   fontSize: screenWidth * 0.05,
+                                   fontWeight: FontWeight.w600
+                               ),
+                             ),
+                           ),
+                           InkWell(
+                             onTap: () {
+                               setState(() {
+                                 initialQty++;
+                               });
+                             },
+                             child: Container(
+                                 decoration: BoxDecoration(
+                                     color: Theme.of(context).colorScheme.primary,
+                                     shape: BoxShape.circle
+                                 ),
+                                 child: Icon(
+                                   Icons.add,
+                                   size: screenWidth * 0.06,
+                                   color: Colors.white,
+                                 )
+                             ),
+                           ),
+                         ],
+                       ),
+                     )
                  ],
                ),
              ),
@@ -323,20 +395,51 @@ class _ProductViewState extends State<ProductView> {
                 bottom: screenHeight * 0.05
               ),
               child: IntrinsicHeight(
-                child: Row(
+                child: cartProvider.items.any((item) => item.productId == widget.product.id) ? Container(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: screenWidth * 0.85,
+                        height: screenHeight * 0.07,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Theme.of(context).colorScheme.primary
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Update Item - ${initialQty * widget.product.price}',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: screenWidth * 0.042
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ) : Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          width: .5
-                        ),
-                        borderRadius: BorderRadius.circular(30)
+                          color: Colors.white,
+                          border: Border.all(
+                              width: .5
+                          ),
+                          borderRadius: BorderRadius.circular(30)
                       ),
                       padding: EdgeInsets.symmetric(
-                        horizontal: screenWidth * 0.05,
-                        vertical: screenHeight * 0.015
+                          horizontal: screenWidth * 0.05,
+                          vertical: screenHeight * 0.015
                       ),
                       child: Row(
                         children: [
@@ -354,12 +457,12 @@ class _ProductViewState extends State<ProductView> {
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(
-                              horizontal: screenWidth * 0.04
+                                horizontal: screenWidth * 0.04
                             ),
                             child: Text(initialQty.toString(),
                               style: TextStyle(
-                                fontSize: screenWidth * 0.05,
-                                fontWeight: FontWeight.w300
+                                  fontSize: screenWidth * 0.05,
+                                  fontWeight: FontWeight.w300
                               ),
                             ),
                           ),
@@ -379,17 +482,48 @@ class _ProductViewState extends State<ProductView> {
                     SizedBox(width: screenWidth * 0.05),
                     Expanded(
                       child: InkWell(
-                        onTap: () {
-                          if (supabase.auth.currentUser == null) {
-                              Get.to(() => LoginSignup());
+                        onTap: () async {
+                          final user = supabase.auth.currentUser;
 
-                              return;
+                          if (user == null) {
+                            Get.to(() => LoginSignup());
+                            return;
+                          }
+
+                          final selectedMl = sizesButton[selectedSize];
+                          final totalPrice = widget.product.price * initialQty;
+
+                          setState(() => isLoading = true);
+
+                          try {
+                            await cartProvider.addItem(
+                                productId: widget.product.id ?? '',
+                                quantity: initialQty,
+                                totalPrice: totalPrice,
+                                userId: user.id,
+                                size: selectedMl
+                            );
+
+                            Get.snackbar('Success', 'Added to cart!',
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: Colors.green.shade600,
+                              colorText: Colors.white,
+                            );
+                          } catch (e) {
+                            print(e);
+                            Get.snackbar('Error', 'Failed to add to cart',
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: Colors.red.shade600,
+                              colorText: Colors.white,
+                            );
+                          } finally {
+                            setState(() => isLoading = false);
                           }
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(30)
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(30)
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -401,8 +535,8 @@ class _ProductViewState extends State<ProductView> {
                               SizedBox(width: screenWidth * 0.02),
                               Text('Add to cart',
                                 style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: screenWidth * 0.04
+                                    color: Colors.white,
+                                    fontSize: screenWidth * 0.04
                                 ),
                               )
                             ],
@@ -411,7 +545,7 @@ class _ProductViewState extends State<ProductView> {
                       ),
                     )
                   ],
-                ),
+                )
               ),
             ),
           )

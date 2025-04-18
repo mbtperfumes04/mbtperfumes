@@ -210,7 +210,7 @@ class _HomeState extends State<Home> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Hi, ${supabase.auth.currentUser != null ? supabase.auth.currentUser?.userMetadata!['username'] : 'User'}!',
+                        Text('Hi, ${supabase.auth.currentUser?.userMetadata!['username'] ?? 'User'}!',
                           style: TextStyle(
                               fontSize: screenWidth * 0.05,
                               fontWeight: FontWeight.w500

@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mbtperfumes/globals.dart';
 import 'package:mbtperfumes/screens/activity.dart';
 import 'package:mbtperfumes/screens/home.dart';
-import 'package:mbtperfumes/screens/shop/account.dart';
+import 'package:mbtperfumes/screens/account.dart';
 
 class Hub extends StatefulWidget {
   const Hub({super.key});

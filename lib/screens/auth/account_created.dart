@@ -48,6 +48,15 @@ class _AccountCreatedState extends State<AccountCreated> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    if (supabase.auth.currentUser?.userMetadata?['username'] != null) {
+      Get.to(() => const Hub());
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
