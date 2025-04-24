@@ -14,6 +14,9 @@ import 'package:mbtperfumes/screens/shop/product_view.dart';
 import 'package:provider/provider.dart';
 import 'package:segmented_button_slide/segmented_button_slide.dart';
 
+import '../../main.dart';
+import '../auth/login_signup.dart';
+
 class MainShop extends StatefulWidget {
 
   const MainShop({
@@ -117,9 +120,12 @@ class _MainShopState extends State<MainShop> {
                             return InkWell(
                               onTap: () => Get.to(() => ProductView(product: product)),
                               child: PerfumeCard(
+                                  product: product,
                                   name: product.name,
                                   price: product.price,
-                                  imagePath: product.images?.first ?? '',
+                                  imagePath: product.images != null && product.images!.isNotEmpty
+                                      ? product.images!.first
+                                      : null,
                                   bgColor: Colors.white
                               ),
                             );
@@ -134,7 +140,14 @@ class _MainShopState extends State<MainShop> {
             bottom: screenHeight * 0.06,
             right: screenWidth * 0.06,
             child: InkWell(
-              onTap: () => Get.to(() => const Cart()),
+              onTap: () async {
+                final user = supabase.auth.currentUser;
+                    if (user == null) {
+                    Get.to(() => LoginSignup());
+                    return;
+                  }
+                    Get.to(() => Cart());
+                },
               child: Container(
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.primary,

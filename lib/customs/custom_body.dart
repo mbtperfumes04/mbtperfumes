@@ -4,13 +4,19 @@ import '../globals.dart';
 class CustomBody extends StatefulWidget {
   final List<Widget> children;
   final SliverAppBar? appBar;
-  final bool isGradient; // NEW
+  final Color? customBG;
+  final bool isGradient;
+  final ScrollController? externalScrollController;
+  final MainAxisAlignment? mainAxisAlignment;
 
   const CustomBody({
     super.key,
     required this.children,
     this.appBar,
-    this.isGradient = true, // default true
+    this.customBG,
+    this.isGradient = true,
+    this.externalScrollController,
+    this.mainAxisAlignment
   });
 
   @override
@@ -18,10 +24,28 @@ class CustomBody extends StatefulWidget {
 }
 
 class _CustomBodyState extends State<CustomBody> {
-  final scrollController = ScrollController();
+  late final ScrollController _internalController;
+
+  @override
+  void initState() {
+    super.initState();
+    _internalController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    // Only dispose if it's not externally provided
+    if (widget.externalScrollController == null) {
+      _internalController.dispose();
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final ScrollController controller =
+        widget.externalScrollController ?? _internalController;
+
     return Container(
       height: screenHeight,
       width: screenWidth,
@@ -40,19 +64,19 @@ class _CustomBodyState extends State<CustomBody> {
           stops: const [0.1, 0.3, 0.5, 0.7, 1.0],
         ),
       )
-          : const BoxDecoration(
-        color: Color(0xFFF6F0DE),
+          : BoxDecoration(
+        color: widget.customBG ?? const Color(0xFFF6F0DE),
       ),
       child: CustomScrollView(
-        controller: scrollController,
-        key: GlobalKey(),
+        controller: controller,
         slivers: [
-          widget.appBar ?? SliverToBoxAdapter(),
+          widget.appBar ?? const SliverToBoxAdapter(),
           SliverToBoxAdapter(
             child: Column(
+              mainAxisAlignment: widget.mainAxisAlignment ?? MainAxisAlignment.start,
               children: widget.children,
             ),
-          )
+          ),
         ],
       ),
     );

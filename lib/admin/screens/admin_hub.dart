@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mbtperfumes/admin/screens/admin_dashboard.dart';
 import 'package:mbtperfumes/globals.dart';
 import 'package:mbtperfumes/screens/activity.dart';
 import 'package:mbtperfumes/screens/home.dart';
 import 'package:mbtperfumes/screens/account.dart';
 
-class Hub extends StatefulWidget {
-  const Hub({super.key});
+class AdminHub extends StatefulWidget {
+  const AdminHub({super.key});
 
   @override
-  State<Hub> createState() => _HubState();
+  State<AdminHub> createState() => _AdminHubState();
 }
 
-class _HubState extends State<Hub> {
+class _AdminHubState extends State<AdminHub> {
   PageController pageController = PageController();
   int selectedIndex = 0;
 
@@ -25,11 +26,11 @@ class _HubState extends State<Hub> {
     return Expanded(
       child: InkWell(
         onTap: () {
-      
+
           setState(() {
             selectedIndex = id;
           });
-      
+
           pageController.jumpToPage(selectedIndex);
         },
         child: Container(
@@ -39,14 +40,14 @@ class _HubState extends State<Hub> {
             children: [
               SvgPicture.asset('assets/svgs/general/$svg.svg',
                 colorFilter: ColorFilter.mode(
-                  selectedIndex == id ? Colors.black : Colors.grey,
-                  BlendMode.srcIn
+                    selectedIndex == id ? Colors.black : Colors.grey,
+                    BlendMode.srcIn
                 ),
               ),
               Text(title,
                 style: TextStyle(
-                  fontSize: screenWidth * 0.03,
-                  color: selectedIndex == id ? Colors.black : Colors.grey
+                    fontSize: screenWidth * 0.03,
+                    color: selectedIndex == id ? Colors.black : Colors.grey
                 ),
               )
             ],
@@ -75,7 +76,7 @@ class _HubState extends State<Hub> {
                 });
               },
               children: [
-                const Home(),
+                const AdminDashboard(),
                 const Activity(),
                 const Account()
               ],
@@ -83,42 +84,34 @@ class _HubState extends State<Hub> {
           ),
           Container(
             decoration: BoxDecoration(
-              color: const Color(0xFFf9efef),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.1),
-                  offset: Offset(0, -3), // shadow goes UP
-                  blurRadius: 30,
-                  spreadRadius: 7,
-                ),
-              ],
+                color: const Color(0xFFf9efef)
             ),
             padding: EdgeInsets.only(
-              left: screenWidth * 0.08,
-              right: screenWidth * 0.08,
-              top: screenHeight * 0.025,
-              bottom: screenHeight * 0.03
+                left: screenWidth * 0.08,
+                right: screenWidth * 0.08,
+                top: screenHeight * 0.045,
+                bottom: screenHeight * 0.03
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 navItem(
-                  id: 0,
-                  title: 'Home',
-                  svg: 'home',
-                  alignment: Alignment.centerLeft
+                    id: 0,
+                    title: 'Dashboard',
+                    svg: 'home',
+                    alignment: Alignment.centerLeft
                 ),
                 navItem(
                     id: 1,
                     title: 'Activity',
                     svg: 'activity',
-                  alignment: Alignment.center
+                    alignment: Alignment.center
                 ),
                 navItem(
                     id: 2,
                     title: 'Account',
                     svg: 'account',
-                  alignment: Alignment.centerRight
+                    alignment: Alignment.centerRight
                 )
               ],
             ),

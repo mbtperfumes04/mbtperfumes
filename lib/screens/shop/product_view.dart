@@ -13,6 +13,7 @@ import '../../providers/cart_provider.dart';
 
 class ProductView extends StatefulWidget {
   final ProductModel product;
+
   const ProductView({
     super.key,
     required this.product
@@ -54,7 +55,7 @@ class _ProductViewState extends State<ProductView> {
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
 
     if (cartProvider.items.any((item) => item.productId == widget.product.id)) {
-      initialQty = cartProvider.items.where((i) => i.productId == widget.product.id).first.quantity;
+
     }
   }
 
@@ -291,66 +292,7 @@ class _ProductViewState extends State<ProductView> {
                        ],
                      )
                    ),
-                   if(cartProvider.items.any((item) => item.productId == widget.product.id))
-                     Container(
-                       margin: EdgeInsets.only(
-                         top: screenHeight * 0.05,
-                         bottom: cartProvider.items.any((item) => item.productId == widget.product.id) ? screenHeight * 0.1 : 0
-                       ),
-                       child: Row(
-                         children: [
-                           InkWell(
-                             onTap: () {
-                               if(initialQty > 0) {
-                                 setState(() {
-                                   initialQty--;
-                                 });
-                               }
-                             },
-                             child: Container(
-                               decoration: BoxDecoration(
-                                 color: Theme.of(context).colorScheme.primary,
-                                 shape: BoxShape.circle
-                               ),
-                               child: Icon(
-                                 Icons.remove,
-                                 size: screenWidth * 0.06,
-                                 color: Colors.white,
-                               )
-                             ),
-                           ),
-                           Container(
-                             width: screenWidth * 0.22,
-                             alignment: Alignment.center,
-                             child: Text(initialQty.toString(),
-                               style: TextStyle(
-                                   color: Colors.black,
-                                   fontSize: screenWidth * 0.05,
-                                   fontWeight: FontWeight.w600
-                               ),
-                             ),
-                           ),
-                           InkWell(
-                             onTap: () {
-                               setState(() {
-                                 initialQty++;
-                               });
-                             },
-                             child: Container(
-                                 decoration: BoxDecoration(
-                                     color: Theme.of(context).colorScheme.primary,
-                                     shape: BoxShape.circle
-                                 ),
-                                 child: Icon(
-                                   Icons.add,
-                                   size: screenWidth * 0.06,
-                                   color: Colors.white,
-                                 )
-                             ),
-                           ),
-                         ],
-                       ),
-                     )
+
                  ],
                ),
              ),
@@ -395,38 +337,7 @@ class _ProductViewState extends State<ProductView> {
                 bottom: screenHeight * 0.05
               ),
               child: IntrinsicHeight(
-                child: cartProvider.items.any((item) => item.productId == widget.product.id) ? Container(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: screenWidth * 0.85,
-                        height: screenHeight * 0.07,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Theme.of(context).colorScheme.primary
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text('Update Item - ${initialQty * widget.product.price}',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: screenWidth * 0.042
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ) : Row(
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Container(
@@ -501,7 +412,8 @@ class _ProductViewState extends State<ProductView> {
                                 quantity: initialQty,
                                 totalPrice: totalPrice,
                                 userId: user.id,
-                                size: selectedMl
+                                size: selectedMl,
+                                product: widget.product
                             );
 
                             Get.snackbar('Success', 'Added to cart!',

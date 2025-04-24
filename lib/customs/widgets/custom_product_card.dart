@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mbtperfumes/models/product_model.dart';
+import 'package:mbtperfumes/providers/favorite_product_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../globals.dart';
 
 class PerfumeCard extends StatefulWidget {
+  final ProductModel product;
   final String name;
   final double price;
   final double? oldPrice;
-  final String imagePath;
+  final String? imagePath;
   final Color bgColor;
 
   const PerfumeCard({
     super.key,
+    required this.product,
     required this.name,
     required this.price,
     this.oldPrice,
@@ -25,6 +31,8 @@ class PerfumeCard extends StatefulWidget {
 class _PerfumeCardState extends State<PerfumeCard> {
   @override
   Widget build(BuildContext context) {
+    final favoriteProvider = Provider.of<FavoriteProductProvider>(context);
+
     return Container(
       height: screenHeight * 0.32,
       padding: EdgeInsets.all(7),
@@ -42,9 +50,17 @@ class _PerfumeCardState extends State<PerfumeCard> {
                   width: screenWidth,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(13),
-                    child: Image.network(widget.imagePath,
+                    child: widget.imagePath != null ? Image.network(widget.imagePath ?? '',
                       fit: BoxFit.cover,
-                    ),
+                    ) : Container(
+                      color: Colors.grey.shade200,
+                      padding: EdgeInsets.all(screenWidth * 0.15),
+                      child: SvgPicture.asset('assets/svgs/products/perfume.svg',
+                        fit: BoxFit.cover,
+                        colorFilter: ColorFilter.mode(
+                            const Color(0xFF808080), BlendMode.srcIn),
+                      ),
+                    )
                   ),
                 ),
               ),
@@ -99,15 +115,34 @@ class _PerfumeCardState extends State<PerfumeCard> {
           Positioned(
             top: screenWidth * 0.015,
             right: screenWidth * 0.015,
-            child: Container(
-              padding: EdgeInsets.all(screenSize * 0.005),
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white
-              ),
-              alignment: Alignment.center,
-              child: Icon(Icons.favorite,
-                color: Colors.red,
+            child: InkWell(
+              onTap: () async {
+                if (favoriteProvider.favorites.any(
+                        (favorite) => favorite.productId == widget.product.id
+                )) {
+                  print('1');
+
+                  final favoriteId = favoriteProvider.favorites.where((fav) => fav.productId == widget.product.id).firstOrNull;
+
+                  if(favoriteId != null) {
+                    favoriteProvider.removeFavorite(favoriteId.id ?? '');
+                  }
+                } else {
+                  favoriteProvider.addFavorite(productId: widget.product.id.toString(), product: widget.product);
+                }
+              },
+              child: Container(
+                padding: EdgeInsets.all(screenSize * 0.005),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white
+                ),
+                alignment: Alignment.center,
+                child: Icon(Icons.favorite,
+                  color: favoriteProvider.favorites.any(
+                          (favorite) => favorite.productId == widget.product.id
+                  ) ? Colors.red : Colors.grey,
+                ),
               ),
             ),
           )

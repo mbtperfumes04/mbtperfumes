@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
+import 'package:mbtperfumes/admin/screens/admin_start.dart';
 import 'package:mbtperfumes/providers/cart_provider.dart';
 import 'package:mbtperfumes/providers/category_provider.dart';
+import 'package:mbtperfumes/providers/favorite_product_provider.dart';
+import 'package:mbtperfumes/providers/order_provider.dart';
+import 'package:mbtperfumes/providers/payment_provider.dart';
 import 'package:mbtperfumes/providers/product_provider.dart';
 import 'package:mbtperfumes/screens/home.dart';
 import 'package:mbtperfumes/screens/hub.dart';
 import 'package:mbtperfumes/themes/light.dart';
 import 'package:provider/provider.dart';
+import 'package:resend/resend.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'globals.dart';
@@ -33,7 +38,10 @@ void main() async {
     providers: [
       ChangeNotifierProvider(create: (_) => CategoryProvider()),
       ChangeNotifierProvider(create: (_) => ProductProvider()),
-      ChangeNotifierProvider(create: (_) => CartProvider())
+      ChangeNotifierProvider(create: (_) => CartProvider()),
+      ChangeNotifierProvider(create: (_) => OrderProvider()),
+      ChangeNotifierProvider(create: (_) => PaymentProvider()),
+      ChangeNotifierProvider(create: (_) => FavoriteProductProvider())
     ],
     child: const Start(),
   ));
@@ -58,15 +66,18 @@ class _StartState extends State<Start> {
   }
 
   Future<void> loadData() async {
+    print('Loading data from supabase');
     await Provider.of<CategoryProvider>(context, listen: false).initData();
     await Provider.of<ProductProvider>(context, listen: false).initData();
+    await Provider.of<FavoriteProductProvider>(context, listen: false).initData();
 
-   FlutterNativeSplash.remove();
-    print("Test");
+    print('Data all loaded');
+    FlutterNativeSplash.remove();
   }
 
   @override
   Widget build(BuildContext context) {
+    Resend(apiKey: 're_VeSuDtEp_Kqvvkyh2i8LUYUygGB84DFir');
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
     screenSize = screenHeight + screenWidth;
@@ -76,7 +87,8 @@ class _StartState extends State<Start> {
       theme: light.copyWith(
         textTheme: light.textTheme.apply(fontFamily: 'Poppins')
       ),
-      home: const Hub()
+      home: supabase.auth.currentUser != null ?
+      (supabase.auth.currentUser?.userMetadata?['role'] != 'Customer' ? const AdminStart() : const Hub()) : const Hub()
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:mbtperfumes/main.dart';
 import 'package:mbtperfumes/screens/auth/login_signup.dart';
 import 'package:mbtperfumes/screens/hub.dart';
 
+import '../admin/screens/admin_hub.dart';
 import '../customs/reusables/custom_option_sheet.dart';
 
 class Account extends StatefulWidget {
@@ -86,6 +87,15 @@ class _AccountState extends State<Account> {
                       showCustomOptionSheet(
                         context: context,
                         options: [
+                          if (supabase.auth.currentUser?.userMetadata?['role'] != 'Customer')
+                          OptionItem(
+                            icon: Icons.admin_panel_settings_outlined,
+                            title: 'Go to Admin Panel',
+                            onTap: () async {
+
+                              Get.offAll(() => const AdminHub());
+                            },
+                          ),
                           OptionItem(
                             icon: Icons.power_settings_new_outlined,
                             title: 'Log out',

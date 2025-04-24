@@ -6,6 +6,8 @@ import 'package:mbtperfumes/main.dart';
 import 'package:mbtperfumes/models/user_model.dart';
 import 'package:mbtperfumes/providers/category_provider.dart';
 import 'package:mbtperfumes/providers/product_provider.dart';
+import 'package:mbtperfumes/screens/cart/cart.dart';
+import 'package:mbtperfumes/screens/unique/customizing_screen.dart';
 import 'package:mbtperfumes/screens/shop/main_shop.dart';
 import 'package:mbtperfumes/screens/shop/product_view.dart';
 import 'package:provider/provider.dart';
@@ -227,15 +229,18 @@ class _HomeState extends State<Home> {
                     ),
                   ],
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle
-                  ),
-                  padding: EdgeInsets.all(screenWidth * 0.032),
-                  child: Icon(Icons.shopping_cart_outlined,
-                  size: screenWidth * 0.06,
-                    color: const Color(0xFF4C4B4B),
+                InkWell(
+                  onTap: () => Get.to(() => const Cart()),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle
+                    ),
+                    padding: EdgeInsets.all(screenWidth * 0.032),
+                    child: Icon(Icons.shopping_cart_outlined,
+                    size: screenWidth * 0.06,
+                      color: const Color(0xFF4C4B4B),
+                    ),
                   ),
                 )
               ],
@@ -355,9 +360,7 @@ class _HomeState extends State<Home> {
                       ),
                       SizedBox( height: screenHeight * 0.02),
                       ElevatedButton(
-                        onPressed: (){
-
-                        },
+                        onPressed: () => Get.to(() => const CustomizingScreen()),
                         style: ElevatedButton.styleFrom(
 
                         ),
@@ -464,9 +467,12 @@ class _HomeState extends State<Home> {
                   return InkWell(
                     onTap: () => Get.to(() => ProductView(product: product)),
                     child: PerfumeCard(
+                        product: product,
                         name: product.name,
                         price: product.price,
-                        imagePath: product.images?.first ?? '',
+                        imagePath: product.images != null && product.images!.isNotEmpty
+                            ? product.images!.first
+                            : null,
                         bgColor: Colors.white
                     ),
                   );

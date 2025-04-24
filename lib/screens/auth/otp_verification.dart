@@ -52,7 +52,7 @@ class _OtpVerificationState extends State<OtpVerification> {
 
       setState(() {
         _isResendAvailable = false;
-        _resendCooldown = 300;
+        _resendCooldown = 120;
       });
 
       _startResendCooldown();
@@ -70,7 +70,7 @@ class _OtpVerificationState extends State<OtpVerification> {
   void _startResendCooldown() {
 
     setState(() {
-      _resendCooldown = widget.codeTimeLeft ?? 300;
+      _resendCooldown = widget.codeTimeLeft ?? 120;
     });
 
     _isResendAvailable = false;
