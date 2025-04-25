@@ -3,6 +3,7 @@ import 'package:flutter_paypal_payment/flutter_paypal_payment.dart';
 import 'package:get/get.dart';
 import 'package:mbtperfumes/controllers/order_purchase_controller.dart';
 import 'package:mbtperfumes/main.dart';
+import 'package:mbtperfumes/models/custom_order_item_model.dart';
 import 'package:mbtperfumes/models/order_item_model.dart';
 import 'package:mbtperfumes/models/order_model.dart';
 import 'package:mbtperfumes/providers/order_provider.dart';
@@ -10,7 +11,12 @@ import 'package:mbtperfumes/screens/cart/success_order.dart';
 import 'package:provider/provider.dart';
 import 'package:resend/resend.dart';
 
+import '../../../controllers/custom_order_purchase_controller.dart';
+import '../../../models/custom_order_model.dart';
 import '../../../providers/cart_provider.dart';
+import '../../../providers/custom_order_provider.dart';
+import '../../../providers/custom_product_provider.dart';
+import '../success_custom_order.dart';
 
 class PaypalPayment extends StatefulWidget {
   const PaypalPayment({super.key,
@@ -23,52 +29,71 @@ class PaypalPayment extends StatefulWidget {
 class _PaypalPaymentState extends State<PaypalPayment> {
   @override
   Widget build(BuildContext context) {
-    final cartProvider = Provider.of<CartProvider>(context);
+    final customProductProvider = Provider.of<CustomProductProvider>(context);
 
-    final paypalItems = cartProvider.items.map((cart) {
-      final product = cartProvider.prodRefOfCartItems.firstWhere((p) => p.id == cart.productId);
+    final paypalItems = customProductProvider.selectedSizes.map((cp) {
       return {
-        "name": product.name,
-        "quantity": cart.quantity,
-        "price": (cart.totalPrice / cart.quantity).toStringAsFixed(2),
+        "name": cp.size,
+        "quantity": cp.quantity,
+        "price": ((cp.size * 8) * cp.quantity).toStringAsFixed(2),
         "currency": "PHP"
       };
     }).toList();
 
-    final totalAmount = cartProvider.items.fold(0.0, (sum, item) => sum + item.totalPrice);
+    final totalAmount = customProductProvider.selectedSizes.fold(
+        0.0, (sum, cp) => sum + (cp.size * 8) * cp.quantity);
 
-    final orderProvider = Provider.of<OrderProvider>(context);
+    final customOrderProvider = Provider.of<CustomOrderProvider>(context);
 
     return PaypalCheckoutView(
         sandboxMode: true,
         onSuccess: (Map params) async {
           print("onSuccess: $params");
 
-          OrderModel order = OrderModel(
+          List<String> topNote = customProductProvider.selectedScents
+              .where((scent) => scent.noteType.toLowerCase() == 'top')
+              .map((scent) => scent.id)
+              .toList();
+
+          List<String> middleNote = customProductProvider.selectedScents
+              .where((scent) => scent.noteType.toLowerCase() == 'middle')
+              .map((scent) => scent.id)
+              .toList();
+
+          List<String> baseNote = customProductProvider.selectedScents
+              .where((scent) => scent.noteType.toLowerCase() == 'base')
+              .map((scent) => scent.id)
+              .toList();
+
+          CustomOrderModel order = CustomOrderModel(
               userId: supabase.auth.currentUser?.id ?? '',
               amount: totalAmount,
               orderStatus: 'Pending',
-              createdAt: DateTime.now()
+              createdAt: DateTime.now(),
+              topNote: topNote,
+              middleNote: middleNote,
+              baseNote: baseNote,
+              name: customProductProvider.customName
           );
 
-          List<OrderItemModel> items = cartProvider.items.map((item) {
-            return OrderItemModel(
-                orderId: '',
-                productId: item.productId,
+          List<CustomOrderItemModel> items = customProductProvider.selectedSizes.map((item) {
+            return CustomOrderItemModel(
+                customOrderId: '',
                 quantity: item.quantity,
-                itemAmount: item.totalPrice,
-                size: item.size,
+                itemAmount: double.tryParse(((item.size * 8) * item.quantity).toStringAsFixed(2)) ?? 0,
+                size: double.tryParse(item.size.toStringAsFixed(2)) ?? 0.0,
                 createdAt: DateTime.now()
             );
           }).toList();
 
-          final result = await orderProvider.placeOrder(order: order, items: items);
+          final result = await customOrderProvider.placeCustomOrder(customOrder: order, items: items);
 
           if(result.isNotEmpty) {
-            final purchaseEmailStatus = await OrderPurchaseController().sendEmail(order: result['order'], orderItems: result['items']);
-            
+            final purchaseEmailStatus = await CustomOrderPurchaseController().sendEmail(
+                order: result['custom_order'], orderItems: result['items']);
+
             if(purchaseEmailStatus) {
-              Get.offAll(() => const SuccessOrder());
+              Get.offAll(() => const SuccessCustomOrder());
             }
           }
 

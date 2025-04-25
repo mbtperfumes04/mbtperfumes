@@ -86,127 +86,131 @@ class _CustomStage4State extends State<CustomStage4> {
                       children: [
                         Container(
                           width: screenWidth * 0.9,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white.withValues(alpha: 0.9),
-                                    borderRadius: BorderRadius.circular(20),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.black.withValues(alpha: 0.1),
-                                          offset: Offset(0, 0),
-                                          blurRadius: 5,
-                                          spreadRadius: 3
-                                      )
-                                    ]
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: screenWidth * 0.03,
-                                    vertical: screenHeight * 0.01
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(topNotes,
-                                      style: TextStyle(
-                                        color: Theme.of(context).colorScheme.primary,
-                                        fontSize: screenWidth * 0.04,
-                                        fontWeight: FontWeight.w600
-                                      ),
-                                    ),
-                                    Text('Top Note',
-                                      style: TextStyle(
-                                          color: const Color(0xFF808080),
-                                          fontSize: screenWidth * 0.03,
-                                          fontWeight: FontWeight.w400
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
                                       color: Colors.white.withValues(alpha: 0.9),
                                       borderRadius: BorderRadius.circular(20),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: Colors.black.withValues(alpha: 0.1),
-                                          offset: Offset(0, 0),
-                                          blurRadius: 5,
-                                          spreadRadius: 3
+                                            color: Colors.black.withValues(alpha: 0.1),
+                                            offset: Offset(0, 0),
+                                            blurRadius: 5,
+                                            spreadRadius: 3
                                         )
                                       ]
-                                    ),
-                                    padding: EdgeInsets.symmetric(
+                                  ),
+                                  padding: EdgeInsets.symmetric(
                                       horizontal: screenWidth * 0.03,
                                       vertical: screenHeight * 0.01
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.end,
-                                      children: [
-                                        Text(middleNotes,
-                                          style: TextStyle(
-                                              color: Theme.of(context).colorScheme.primary,
-                                              fontSize: screenWidth * 0.04,
-                                              fontWeight: FontWeight.w600
-                                          ),
-                                        ),
-                                        Text('Middle Note',
-                                          style: TextStyle(
-                                              color: const Color(0xFF808080),
-                                              fontSize: screenWidth * 0.03,
-                                              fontWeight: FontWeight.w400
-                                          ),
-                                        )
-                                      ],
-                                    ),
                                   ),
-                                ],
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white.withValues(alpha: 0.9),
-                                    borderRadius: BorderRadius.circular(20),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.black.withValues(alpha: 0.1),
-                                          offset: Offset(0, 0),
-                                          blurRadius: 5,
-                                          spreadRadius: 3
-                                      )
-                                    ]
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: screenWidth * 0.03,
-                                    vertical: screenHeight * 0.01
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(baseNotes,
-                                      style: TextStyle(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(topNotes,
+                                        style: TextStyle(
                                           color: Theme.of(context).colorScheme.primary,
                                           fontSize: screenWidth * 0.04,
                                           fontWeight: FontWeight.w600
+                                        ),
+                                      ),
+                                      Text('Top Note',
+                                        style: TextStyle(
+                                            color: const Color(0xFF808080),
+                                            fontSize: screenWidth * 0.03,
+                                            fontWeight: FontWeight.w400
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: screenHeight * 0.05),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.white.withValues(alpha: 0.9),
+                                        borderRadius: BorderRadius.circular(20),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black.withValues(alpha: 0.1),
+                                            offset: Offset(0, 0),
+                                            blurRadius: 5,
+                                            spreadRadius: 3
+                                          )
+                                        ]
+                                      ),
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: screenWidth * 0.03,
+                                        vertical: screenHeight * 0.01
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: [
+                                          Text(middleNotes,
+                                            style: TextStyle(
+                                                color: Theme.of(context).colorScheme.primary,
+                                                fontSize: screenWidth * 0.04,
+                                                fontWeight: FontWeight.w600
+                                            ),
+                                          ),
+                                          Text('Middle Note',
+                                            style: TextStyle(
+                                                color: const Color(0xFF808080),
+                                                fontSize: screenWidth * 0.03,
+                                                fontWeight: FontWeight.w400
+                                            ),
+                                          )
+                                        ],
                                       ),
                                     ),
-                                    Text('Base Note',
-                                      style: TextStyle(
-                                          color: const Color(0xFF808080),
-                                          fontSize: screenWidth * 0.03,
-                                          fontWeight: FontWeight.w400
-                                      ),
-                                    )
                                   ],
                                 ),
-                              ),
-                            ],
+                                SizedBox(height: screenHeight * 0.05),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.white.withValues(alpha: 0.9),
+                                      borderRadius: BorderRadius.circular(20),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: Colors.black.withValues(alpha: 0.1),
+                                            offset: Offset(0, 0),
+                                            blurRadius: 5,
+                                            spreadRadius: 3
+                                        )
+                                      ]
+                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: screenWidth * 0.03,
+                                      vertical: screenHeight * 0.01
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(baseNotes,
+                                        style: TextStyle(
+                                            color: Theme.of(context).colorScheme.primary,
+                                            fontSize: screenWidth * 0.04,
+                                            fontWeight: FontWeight.w600
+                                        ),
+                                      ),
+                                      Text('Base Note',
+                                        style: TextStyle(
+                                            color: const Color(0xFF808080),
+                                            fontSize: screenWidth * 0.03,
+                                            fontWeight: FontWeight.w400
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         )
                       ],

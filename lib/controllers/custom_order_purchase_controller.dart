@@ -3,10 +3,13 @@ import 'package:mbtperfumes/models/order_item_model.dart';
 import 'package:mbtperfumes/models/order_model.dart';
 import 'package:mbtperfumes/models/payment_model.dart';
 
-class PurchaseController {
+import '../models/custom_order_item_model.dart';
+import '../models/custom_order_model.dart';
+
+class CustomOrderPurchaseController {
   Future<bool> sendEmail({
-    required OrderModel order,
-    required List<OrderItemModel> orderItems,
+    required CustomOrderModel order,
+    required List<CustomOrderItemModel> orderItems,
     PaymentModel? payment,
   }) async {
     try {
@@ -25,10 +28,10 @@ class PurchaseController {
           <ul>
             ${orderItems.map((item) => '''
               <li>
-                <strong>Product ID:</strong> ${item.productId}<br/>
+                <strong>Order ID:</strong> ${item.id}<br/>
                 <strong>Quantity:</strong> ${item.quantity}<br/>
                 <strong>Size:</strong> ${item.size}<br/>
-                <strong>Price:</strong> \$${item.itemAmount.toStringAsFixed(2)}
+                <strong>Price:</strong> ₱${item.itemAmount.toStringAsFixed(2)}
               </li>
             ''').join()}
           </ul>

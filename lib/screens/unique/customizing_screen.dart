@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mbtperfumes/customs/custom_body.dart';
 import 'package:mbtperfumes/globals.dart';
 import 'package:mbtperfumes/providers/custom_product_provider.dart';
@@ -8,6 +9,7 @@ import 'package:mbtperfumes/screens/unique/partials/stage_1.dart';
 import 'package:mbtperfumes/screens/unique/partials/stage_2.dart';
 import 'package:mbtperfumes/screens/unique/partials/stage_3.dart';
 import 'package:mbtperfumes/screens/unique/partials/stage_5.dart';
+import 'package:mbtperfumes/screens/unique/payments/paypal.dart';
 import 'package:provider/provider.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
@@ -43,6 +45,24 @@ class _CustomizingScreenState extends State<CustomizingScreen> {
       _customProductProvider.clearPaymentMethods();
     });
     super.dispose();
+  }
+
+  void processOrder() {
+
+    final customOrderProvider = Provider.of<CustomProductProvider>(context, listen: false);
+
+    String payment = customOrderProvider
+      .availablePaymentMethods
+      .where((cop) => cop.id == customOrderProvider.selectedPaymentMethod).first.label.toLowerCase();
+
+    if(payment.isNotEmpty) {
+
+      if(payment == 'paypal') {
+        Get.to(() => const PaypalPayment());
+      }
+
+    }
+
   }
 
   @override
@@ -165,6 +185,8 @@ class _CustomizingScreenState extends State<CustomizingScreen> {
 
                     return;
                   }
+
+                  processOrder();
                 } : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).colorScheme.primary,
