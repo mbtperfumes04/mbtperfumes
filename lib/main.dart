@@ -5,7 +5,10 @@ import 'package:get/get.dart';
 import 'package:mbtperfumes/admin/screens/admin_start.dart';
 import 'package:mbtperfumes/providers/cart_provider.dart';
 import 'package:mbtperfumes/providers/category_provider.dart';
+import 'package:mbtperfumes/providers/custom_order_provider.dart';
+import 'package:mbtperfumes/providers/custom_product_provider.dart';
 import 'package:mbtperfumes/providers/favorite_product_provider.dart';
+import 'package:mbtperfumes/providers/notes_scent_provider.dart';
 import 'package:mbtperfumes/providers/order_provider.dart';
 import 'package:mbtperfumes/providers/payment_provider.dart';
 import 'package:mbtperfumes/providers/product_provider.dart';
@@ -28,7 +31,6 @@ void main() async {
 
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-
   await Supabase.initialize(
     url: 'https://dazuyanxytepiineldkc.supabase.co',
     anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRhenV5YW54eXRlcGlpbmVsZGtjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAwNDI3MzQsImV4cCI6MjA1NTYxODczNH0.C4yUvw5VibYAUEM_BpWCRwF0Qux5YmVb40hIMhtOJpA',
@@ -41,7 +43,10 @@ void main() async {
       ChangeNotifierProvider(create: (_) => CartProvider()),
       ChangeNotifierProvider(create: (_) => OrderProvider()),
       ChangeNotifierProvider(create: (_) => PaymentProvider()),
-      ChangeNotifierProvider(create: (_) => FavoriteProductProvider())
+      ChangeNotifierProvider(create: (_) => FavoriteProductProvider()),
+      ChangeNotifierProvider(create: (_) => NotesScentsProvider()),
+      ChangeNotifierProvider(create: (_) => CustomProductProvider()),
+      ChangeNotifierProvider(create: (_) => CustomOrderProvider())
     ],
     child: const Start(),
   ));

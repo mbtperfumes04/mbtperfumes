@@ -460,7 +460,7 @@ class _HomeState extends State<Home> {
                   bool isSelected = selectedMenu == '' ? true : prod.categoryId == selectedMenu;
 
                   return isSelected;
-                }).toList().asMap().entries.map((entry) {
+                }).take(10).toList().asMap().entries.map((entry) {
                   final index = entry.key;
                   final product = entry.value;
 

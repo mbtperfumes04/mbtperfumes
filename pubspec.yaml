@@ -51,6 +51,7 @@ dependencies:
   flutter_paypal_payment: ^1.0.8
   resend: ^1.0.0
   step_progress_indicator: ^1.0.2
+  fl_chart: ^0.71.0
 
 flutter_native_splash:
   color: "#F6F0DE"
