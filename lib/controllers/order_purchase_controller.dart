@@ -18,7 +18,7 @@ class OrderPurchaseController {
           <h2>Thank you for your order!</h2>
           <p><strong>Order ID:</strong> ${order.id ?? 'N/A'}</p>
           <p><strong>Status:</strong> ${order.orderStatus}</p>
-          <p><strong>Total Amount:</strong> \$${order.amount.toStringAsFixed(2)}</p>
+          <p><strong>Total Amount:</strong> ₱${order.amount.toStringAsFixed(2)}</p>
           <p><strong>Order Date:</strong> ${order.createdAt.toLocal()}</p>
 
           <h3>Items:</h3>
