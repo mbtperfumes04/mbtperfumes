@@ -193,22 +193,19 @@ class _HomeState extends State<Home> {
               children: [
                 Row(
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(
-                          right: screenWidth * 0.03
-                      ),
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: supabase.auth.currentUser != null && supabase.auth.currentUser?.userMetadata?['avatar'] != null ?
-                                NetworkImage(supabase.auth.currentUser?.userMetadata?['avatar']) :
-                                AssetImage('assets/images/general/profilepic2.jpeg'),
-                              fit: BoxFit.cover
-                          ),
-                          borderRadius: BorderRadius.circular(100)
-                      ),
-                      width: screenWidth * 0.16,
-                      height: screenWidth * 0.16,
+                    CircleAvatar(
+                      radius: 40,
+                      backgroundImage: supabase.auth.currentUser != null &&
+                          supabase.auth.currentUser?.userMetadata?['avatar'] != null
+                          ? NetworkImage(supabase.auth.currentUser?.userMetadata?['avatar'])
+                          : null,
+                      backgroundColor: Colors.grey.shade200, // Optional background color
+                      child: (supabase.auth.currentUser == null ||
+                          supabase.auth.currentUser?.userMetadata?['avatar'] == null)
+                          ? Icon(Icons.person, size: 50, color: Colors.grey)
+                          : null,
                     ),
+                    SizedBox(width: screenWidth * 0.03),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

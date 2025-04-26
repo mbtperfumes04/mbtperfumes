@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:mbtperfumes/customs/custom_body.dart';
@@ -84,11 +85,21 @@ class _ProductViewState extends State<ProductView> {
                    height: screenHeight * 0.5,
                    decoration: BoxDecoration(
                        color: Colors.red,
-                       image: DecorationImage(
+                       image: widget.product.images != null && widget.product.images!.isNotEmpty ? DecorationImage(
                            image: NetworkImage(widget.product.images?[0] ?? ''),
                            fit: BoxFit.cover
-                       )
+                       ) : null,
                    ),
+                   child: widget.product.images != null ?
+                   Container(
+                     color: Colors.grey.shade200,
+                     padding: EdgeInsets.all(screenWidth * 0.4),
+                     child: SvgPicture.asset('assets/svgs/products/perfume.svg',
+                       fit: BoxFit.cover,
+                       colorFilter: ColorFilter.mode(
+                           const Color(0xFF808080), BlendMode.srcIn),
+                     ),
+                   ) : SizedBox.shrink(),
                  ),
                ),
              ],
