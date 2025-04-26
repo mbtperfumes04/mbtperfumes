@@ -447,6 +447,28 @@ class _CustomStage2State extends State<CustomStage2> {
                             )
                           ],
                         ),
+                      ),
+                      SizedBox(height: screenHeight * 0.05),
+                      Container(
+                        child: Column(
+                          children: [
+                            Text('Current Pricing Rate:',
+                              style: TextStyle(
+                                color: const Color(0xFF808080)
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('₱$perMlPrice per ml',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
                       )
                     ],
                   ),
