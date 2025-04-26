@@ -3,6 +3,7 @@ import 'package:mbtperfumes/models/order_item_model.dart';
 import 'package:mbtperfumes/models/order_model.dart';
 import 'package:mbtperfumes/models/payment_model.dart';
 
+import '../main.dart';
 import '../models/custom_order_item_model.dart';
 import '../models/custom_order_model.dart';
 
@@ -46,7 +47,7 @@ class CustomOrderPurchaseController {
 
       await resend.sendEmail(
         from: 'support@mbtperfumes.com',
-        to: ['qskvcueto@tip.edu.ph'],
+        to: [supabase.auth.currentUser?.email ?? ''],
         subject: 'Your Order Confirmation - ID: ${order.id ?? ''}',
         html: htmlContent,
       );
