@@ -25,7 +25,7 @@ class _CustomStage5State extends State<CustomStage5> {
     final customProductProvider = Provider.of<CustomProductProvider>(context);
 
     final totalValue = customProductProvider
-        .selectedSizes.fold(0.0, (sum, item) => ((item.size * 8) * item.quantity) + sum);
+        .selectedSizes.fold(0.0, (sum, item) => ((item.size * perMlPrice) * item.quantity) + sum);
     
     return Scaffold(
       backgroundColor: Colors.transparent,

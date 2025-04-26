@@ -303,7 +303,7 @@ class _CustomStage4State extends State<CustomStage4> {
                                 padding: EdgeInsets.symmetric(
                                   horizontal: screenWidth * 0.03
                                 ),
-                                child: Text('₱${((sizeQty.size * 8) * sizeQty.quantity).toStringAsFixed(2)}',
+                                child: Text('₱${((sizeQty.size * perMlPrice) * sizeQty.quantity).toStringAsFixed(2)}',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w600

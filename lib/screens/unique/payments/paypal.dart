@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_paypal_payment/flutter_paypal_payment.dart';
 import 'package:get/get.dart';
 import 'package:mbtperfumes/controllers/order_purchase_controller.dart';
+import 'package:mbtperfumes/globals.dart';
 import 'package:mbtperfumes/main.dart';
 import 'package:mbtperfumes/models/custom_order_item_model.dart';
 import 'package:mbtperfumes/models/order_item_model.dart';
@@ -35,13 +36,13 @@ class _PaypalPaymentState extends State<PaypalPayment> {
       return {
         "name": cp.size,
         "quantity": cp.quantity,
-        "price": ((cp.size * 8) * cp.quantity).toStringAsFixed(2),
+        "price": ((cp.size * perMlPrice) * cp.quantity).toStringAsFixed(2),
         "currency": "PHP"
       };
     }).toList();
 
     final totalAmount = customProductProvider.selectedSizes.fold(
-        0.0, (sum, cp) => sum + (cp.size * 8) * cp.quantity);
+        0.0, (sum, cp) => sum + (cp.size * perMlPrice) * cp.quantity);
 
     final customOrderProvider = Provider.of<CustomOrderProvider>(context);
 
@@ -80,7 +81,7 @@ class _PaypalPaymentState extends State<PaypalPayment> {
             return CustomOrderItemModel(
                 customOrderId: '',
                 quantity: item.quantity,
-                itemAmount: double.tryParse(((item.size * 8) * item.quantity).toStringAsFixed(2)) ?? 0,
+                itemAmount: double.tryParse(((item.size * perMlPrice) * item.quantity).toStringAsFixed(2)) ?? 0,
                 size: double.tryParse(item.size.toStringAsFixed(2)) ?? 0.0,
                 createdAt: DateTime.now()
             );
