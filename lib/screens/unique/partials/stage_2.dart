@@ -386,6 +386,10 @@ class _CustomStage2State extends State<CustomStage2> {
                                   padding: EdgeInsets.symmetric(
                                       vertical: screenHeight * 0.014
                                   ),
+                                  margin: EdgeInsets.only(
+                                    right: customProductProvider.selectedSizes.length > 1 ?
+                                      screenWidth * 0.01 : 0
+                                  ),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -401,7 +405,7 @@ class _CustomStage2State extends State<CustomStage2> {
                                 ),
                               ),
                             ),
-                            SizedBox(width: screenWidth * 0.05),
+                            if(customProductProvider.selectedSizes.length > 1)
                             Expanded(
                               child: InkWell(
                                 onTap: () {
@@ -425,6 +429,7 @@ class _CustomStage2State extends State<CustomStage2> {
                                   padding: EdgeInsets.symmetric(
                                       vertical: screenHeight * 0.014
                                   ),
+                                  margin: EdgeInsets.only(left: screenWidth * 0.01),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
