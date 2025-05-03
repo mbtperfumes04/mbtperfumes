@@ -12,6 +12,7 @@ import 'package:mbtperfumes/providers/notes_scent_provider.dart';
 import 'package:mbtperfumes/providers/order_provider.dart';
 import 'package:mbtperfumes/providers/payment_provider.dart';
 import 'package:mbtperfumes/providers/product_provider.dart';
+import 'package:mbtperfumes/providers/search_provider.dart';
 import 'package:mbtperfumes/screens/home.dart';
 import 'package:mbtperfumes/screens/hub.dart';
 import 'package:mbtperfumes/themes/light.dart';
@@ -46,7 +47,8 @@ void main() async {
       ChangeNotifierProvider(create: (_) => FavoriteProductProvider()),
       ChangeNotifierProvider(create: (_) => NotesScentsProvider()),
       ChangeNotifierProvider(create: (_) => CustomProductProvider()),
-      ChangeNotifierProvider(create: (_) => CustomOrderProvider())
+      ChangeNotifierProvider(create: (_) => CustomOrderProvider()),
+      ChangeNotifierProvider(create: (_) => SearchProvider())
     ],
     child: const Start(),
   ));
