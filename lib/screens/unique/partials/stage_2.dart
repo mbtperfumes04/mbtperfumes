@@ -287,7 +287,9 @@ class _CustomStage2State extends State<CustomStage2> {
                                   borderRadius: BorderRadius.circular(100),
                                   child: Container(
                                     decoration: BoxDecoration(
-                                      color: Theme.of(context).colorScheme.primary.withAlpha(100),
+                                      color: Theme.of(context).colorScheme.primary.withValues(
+                                        alpha: 0.6
+                                      ),
                                       shape: BoxShape.circle,
                                     ),
                                     padding: EdgeInsets.all(screenWidth * 0.015),
