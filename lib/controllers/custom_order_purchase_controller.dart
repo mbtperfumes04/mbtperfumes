@@ -16,6 +16,12 @@ class CustomOrderPurchaseController {
     try {
       final resend = Resend.instance;
 
+      String emailToSend = supabase.auth.currentUser?.email ?? '';
+
+      if (emailToSend.isEmpty) {
+        throw Exception("Empty email, can't send an email!");
+      }
+
       // Compose a custom HTML email
       final String htmlContent = '''
         <div style="font-family: Arial, sans-serif;">
@@ -46,8 +52,8 @@ class CustomOrderPurchaseController {
       ''';
 
       await resend.sendEmail(
-        from: 'support@mbtperfumes.com',
-        to: [supabase.auth.currentUser?.email ?? ''],
+        from: 'sales@mbtperfumes.com',
+        to: [emailToSend],
         subject: 'Your Order Confirmation - ID: ${order.id ?? ''}',
         html: htmlContent,
       );

@@ -23,6 +23,10 @@ class FavoriteProductProvider with ChangeNotifier {
   }
 
   Future<void> initData() async {
+    if(supabase.auth.currentUser == null) {
+      return;
+    }
+
     await fetchFavorites();
   }
 
