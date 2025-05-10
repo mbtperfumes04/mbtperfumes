@@ -7,6 +7,7 @@ import 'package:mbtperfumes/models/user_model.dart';
 import 'package:mbtperfumes/providers/category_provider.dart';
 import 'package:mbtperfumes/providers/product_provider.dart';
 import 'package:mbtperfumes/screens/cart/cart.dart';
+import 'package:mbtperfumes/screens/search/search.dart';
 import 'package:mbtperfumes/screens/unique/customizing_screen.dart';
 import 'package:mbtperfumes/screens/shop/main_shop.dart';
 import 'package:mbtperfumes/screens/shop/product_view.dart';
@@ -253,29 +254,35 @@ class _HomeState extends State<Home> {
             child: Row(
               children: [
                 Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30)
+                  child: InkWell(
+                    onTap: () => Get.to(() => const Search(),
+                      transition: Transition.fadeIn,
+                      duration: const Duration(milliseconds: 300),
                     ),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: screenWidth * 0.04,
-                      vertical: screenHeight * 0.014
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(Icons.search,
-                          size: screenWidth * 0.06,
-                          color: const Color(0xff808080),
-                        ),
-                        SizedBox(width: screenWidth * 0.02),
-                        Text('Find your perfume',
-                          style: TextStyle(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30)
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: screenWidth * 0.04,
+                        vertical: screenHeight * 0.014
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(Icons.search,
+                            size: screenWidth * 0.06,
                             color: const Color(0xff808080),
-                            fontSize: screenWidth * 0.038
                           ),
-                        )
-                      ],
+                          SizedBox(width: screenWidth * 0.02),
+                          Text('Find your perfume',
+                            style: TextStyle(
+                              color: const Color(0xff808080),
+                              fontSize: screenWidth * 0.038
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
