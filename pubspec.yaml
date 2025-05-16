@@ -53,6 +53,7 @@ dependencies:
   step_progress_indicator: ^1.0.2
   fl_chart: ^0.71.0
   shared_preferences: ^2.5.3
+  intl: ^0.20.2
 
 flutter_native_splash:
   color: "#F6F0DE"

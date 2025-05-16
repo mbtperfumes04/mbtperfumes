@@ -28,6 +28,26 @@ class OrderModel {
     this.updatedAt,
   });
 
+  OrderModel copyWith({
+    String? id,
+    String? userId,
+    String? note,
+    double? amount,
+    String? orderStatus,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) {
+    return OrderModel(
+      id: id ?? this.id,
+      userId: userId ?? this.userId,
+      note: note ?? this.note,
+      amount: amount ?? this.amount,
+      orderStatus: orderStatus ?? this.orderStatus,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+
   factory OrderModel.fromMap(Map<String, dynamic> map) => OrderModel(
     id: map[OrderFields.id],
     userId: map[OrderFields.userId],

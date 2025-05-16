@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mbtperfumes/admin/screens/admin_dashboard.dart';
+import 'package:mbtperfumes/admin/screens/admin_orders.dart';
 import 'package:mbtperfumes/globals.dart';
+import 'package:mbtperfumes/providers/admin/admin_provider.dart';
 import 'package:mbtperfumes/screens/activity.dart';
 import 'package:mbtperfumes/screens/home.dart';
 import 'package:mbtperfumes/screens/account.dart';
+import 'package:provider/provider.dart';
 
 class AdminHub extends StatefulWidget {
   const AdminHub({super.key});
@@ -16,6 +19,7 @@ class AdminHub extends StatefulWidget {
 class _AdminHubState extends State<AdminHub> {
   PageController pageController = PageController();
   int selectedIndex = 0;
+  bool isInitialized = false;
 
   Widget navItem({
     required int id,
@@ -60,6 +64,18 @@ class _AdminHubState extends State<AdminHub> {
   @override
   void initState() {
     super.initState();
+
+    initialize();
+  }
+
+  Future<void> initialize() async {
+    final adminProvider = Provider.of<AdminProvider>(context, listen: false);
+
+    print('Initializing Admin Data');
+
+    await adminProvider.initialize();
+
+    print('Data Loaded');
   }
 
   @override
@@ -77,7 +93,7 @@ class _AdminHubState extends State<AdminHub> {
               },
               children: [
                 const AdminDashboard(),
-                const Activity(),
+                const AdminOrders(),
                 const Account()
               ],
             ),
@@ -103,7 +119,7 @@ class _AdminHubState extends State<AdminHub> {
                 ),
                 navItem(
                     id: 1,
-                    title: 'Activity',
+                    title: 'Orders',
                     svg: 'activity',
                     alignment: Alignment.center
                 ),

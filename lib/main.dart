@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:mbtperfumes/admin/screens/admin_start.dart';
+import 'package:mbtperfumes/providers/admin/admin_provider.dart';
 import 'package:mbtperfumes/providers/cart_provider.dart';
 import 'package:mbtperfumes/providers/category_provider.dart';
 import 'package:mbtperfumes/providers/custom_order_provider.dart';
@@ -48,7 +49,8 @@ void main() async {
       ChangeNotifierProvider(create: (_) => NotesScentsProvider()),
       ChangeNotifierProvider(create: (_) => CustomProductProvider()),
       ChangeNotifierProvider(create: (_) => CustomOrderProvider()),
-      ChangeNotifierProvider(create: (_) => SearchProvider())
+      ChangeNotifierProvider(create: (_) => SearchProvider()),
+      ChangeNotifierProvider(create: (_) => AdminProvider())
     ],
     child: const Start(),
   ));

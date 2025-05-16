@@ -90,7 +90,7 @@ class _ProductViewState extends State<ProductView> {
                            fit: BoxFit.cover
                        ) : null,
                    ),
-                   child: widget.product.images != null ?
+                   child: widget.product.images == null ?
                    Container(
                      color: Colors.grey.shade200,
                      padding: EdgeInsets.all(screenWidth * 0.4),

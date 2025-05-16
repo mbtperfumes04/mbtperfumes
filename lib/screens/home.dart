@@ -25,7 +25,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  UserModel? user;
+  ProfileModel? user;
   String selectedMenu = '';
 
   @override
