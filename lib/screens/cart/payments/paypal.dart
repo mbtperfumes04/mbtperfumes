@@ -58,7 +58,8 @@ class _PaypalPaymentState extends State<PaypalPayment> {
                 quantity: item.quantity,
                 itemAmount: item.totalPrice,
                 size: item.size,
-                createdAt: DateTime.now()
+                createdAt: DateTime.now(),
+                updatedAt: DateTime.now()
             );
           }).toList();
 

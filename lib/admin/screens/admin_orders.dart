@@ -243,7 +243,7 @@ class _AdminOrdersState extends State<AdminOrders> {
                                       value: status,
                                       child: Text(
                                         status,
-                                        style: TextStyle(color: Colors.black), // dropdown list items
+                                        style: TextStyle(color: Colors.black),
                                       ),
                                     );
                                   }).toList(),

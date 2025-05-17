@@ -70,4 +70,22 @@ class OrderController {
         .map((e) => OrderItemModel.fromMap(e as Map<String, dynamic>))
         .toList();
   }
+
+  Future<OrderModel?> updateOrder({
+    required OrderModel updatedOrder,
+  }) async {
+    try {
+      final response = await _client
+          .from(OrderFields.table)
+          .update(updatedOrder.toMap())
+          .eq('id', updatedOrder.id ?? '')
+          .select()
+          .single();
+
+      return OrderModel.fromMap(response);
+    } catch (e) {
+      print('Error updating order: $e');
+      rethrow;
+    }
+  }
 }

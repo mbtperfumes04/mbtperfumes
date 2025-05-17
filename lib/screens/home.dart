@@ -7,6 +7,7 @@ import 'package:mbtperfumes/models/user_model.dart';
 import 'package:mbtperfumes/providers/category_provider.dart';
 import 'package:mbtperfumes/providers/product_provider.dart';
 import 'package:mbtperfumes/screens/cart/cart.dart';
+import 'package:mbtperfumes/screens/favorites/favorite.dart';
 import 'package:mbtperfumes/screens/search/search.dart';
 import 'package:mbtperfumes/screens/unique/customizing_screen.dart';
 import 'package:mbtperfumes/screens/shop/main_shop.dart';
@@ -275,7 +276,8 @@ class _HomeState extends State<Home> {
                             color: const Color(0xff808080),
                           ),
                           SizedBox(width: screenWidth * 0.02),
-                          Text('Find your perfume',
+                          Text('''
+Find your perfume''',
                             style: TextStyle(
                               color: const Color(0xff808080),
                               fontSize: screenWidth * 0.038
@@ -286,17 +288,27 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ),
-                Container(
-                  padding: EdgeInsets.all(screenWidth * 0.032),
-                  margin: EdgeInsets.only(
-                    left: screenWidth * 0.02
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    shape: BoxShape.circle
-                  ),
-                  child: Icon(Icons.favorite_outline_sharp,
-                    color: Colors.white,
+                InkWell(
+                  onTap: () {
+                    if(supabase.auth.currentUser == null) return;
+
+                    Get.to(() => const Favorite(),
+                      duration: const Duration(milliseconds: 300),
+                      transition: Transition.rightToLeft
+                    );
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(screenWidth * 0.032),
+                    margin: EdgeInsets.only(
+                      left: screenWidth * 0.02
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      shape: BoxShape.circle
+                    ),
+                    child: Icon(Icons.favorite_outline_sharp,
+                      color: Colors.white,
+                    ),
                   ),
                 )
               ],
@@ -459,7 +471,7 @@ class _HomeState extends State<Home> {
               mainAxisSpacing: screenHeight * 0.02,
               crossAxisSpacing: screenWidth * 0.04,
               children: [
-                filterProducts(),
+                // filterProducts(),
                 ...productProvider.products.where((prod) {
                   bool isSelected = selectedMenu == '' ? true : prod.categoryId == selectedMenu;
 

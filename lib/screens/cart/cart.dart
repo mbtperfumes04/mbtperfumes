@@ -185,11 +185,16 @@ class _CartState extends State<Cart> {
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            product.name,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: screenWidth * 0.038,
+                                          Container(
+                                            width: screenWidth * 0.45 ,
+                                            child: Text(
+                                              product.name,
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: screenWidth * 0.038,
+                                              ),
                                             ),
                                           ),
                                           Text(
@@ -248,7 +253,7 @@ class _CartState extends State<Cart> {
                     SizedBox(height: screenHeight * 0.02),
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
-                      child: Column(
+                      child: cartProvider.items.isNotEmpty ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
@@ -310,6 +315,18 @@ class _CartState extends State<Cart> {
                             },
                           )
                         ],
+                      ) : Container(
+                        margin: EdgeInsets.only(
+                          top: screenHeight * 0.06
+                        ),
+                        alignment: Alignment.center,
+                        // child: Text('Oops! Empty cart',
+                        //   style: TextStyle(
+                        //     color: const Color(0xFF808080),
+                        //     fontSize: screenSize * 0.015,
+                        //     fontWeight: FontWeight.w600
+                        //   ),
+                        // ),
                       ),
                     ),
                     SizedBox(height: screenHeight * 0.2)
@@ -318,6 +335,7 @@ class _CartState extends State<Cart> {
               )
             ],
           ),
+          if(cartProvider.items.isNotEmpty)
           Positioned(
             bottom: 0,
             left: 0,

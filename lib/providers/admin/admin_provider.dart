@@ -1,8 +1,11 @@
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:mbtperfumes/controllers/admin/admin_controller.dart';
 import 'package:mbtperfumes/models/order_item_model.dart';
 import 'package:mbtperfumes/models/order_model.dart';
 import 'package:mbtperfumes/models/user_model.dart';
+import 'package:mbtperfumes/providers/order_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AdminProvider with ChangeNotifier {
@@ -45,6 +48,10 @@ class AdminProvider with ChangeNotifier {
       int orderIndex = orders.indexWhere((order) => order.id == toUpdate.id);
 
       _orders[orderIndex] = toUpdate;
+
+      final orderProvider = Provider.of<OrderProvider>(Get.context as BuildContext, listen: false);
+
+      await orderProvider.updateLocalOrder(toUpdate);
 
       notifyListeners();
     }

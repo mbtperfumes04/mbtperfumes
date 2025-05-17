@@ -14,6 +14,17 @@ class OrderProvider with ChangeNotifier {
   List<OrderItemModel> _orderItems = [];
 
   List<OrderModel> get orders => _orders;
+  List<OrderItemModel> get orderItems => _orderItems;
+
+  OrderProvider() {
+   initializeOrders();
+  }
+
+  Future<void> initializeOrders() async {
+    if(supabase.auth.currentUser == null) return;
+
+    await fetchOrders(supabase.auth.currentUser?.id ?? '');
+  }
 
   List<OrderItemModel> getItemsForOrder(String orderId) {
     return _orderItems.where((item) => item.orderId == orderId).toList();
@@ -21,6 +32,37 @@ class OrderProvider with ChangeNotifier {
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
+
+  // EDIT PROVIDER ONLY FOR LOCAL WITHOUT DB INTERACTION
+  Future<void> updateLocalOrder(OrderModel order) async {
+    int index = orders.indexWhere((ord) => ord.id == order.id);
+
+    if(index != -1) {
+      _orders[index] = order;
+
+      notifyListeners();
+    }
+  }
+
+  Future<void> updateOrder(OrderModel updatedOrder) async {
+    try {
+      final updated = await _orderController.updateOrder(
+        updatedOrder: updatedOrder,
+      );
+
+      if (updated != null) {
+        int index = _orders.indexWhere((ord) => ord.id == updated.id);
+        if (index != -1) {
+          _orders[index] = updated;
+          notifyListeners();
+        }
+      }
+    } catch (e) {
+      print('Error updating order: $e');
+      rethrow;
+    }
+  }
+
 
   Future<void> fetchOrders(String userId) async {
     _isLoading = true;

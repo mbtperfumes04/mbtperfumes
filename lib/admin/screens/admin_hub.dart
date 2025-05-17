@@ -94,18 +94,17 @@ class _AdminHubState extends State<AdminHub> {
               children: [
                 const AdminDashboard(),
                 const AdminOrders(),
-                const Account()
               ],
             ),
           ),
           Container(
             decoration: BoxDecoration(
-                color: const Color(0xFFf9efef)
+                color: Colors.white
             ),
             padding: EdgeInsets.only(
                 left: screenWidth * 0.08,
                 right: screenWidth * 0.08,
-                top: screenHeight * 0.045,
+                top: screenHeight * 0.02,
                 bottom: screenHeight * 0.03
             ),
             child: Row(
@@ -113,9 +112,9 @@ class _AdminHubState extends State<AdminHub> {
               children: [
                 navItem(
                     id: 0,
-                    title: 'Dashboard',
+                    title: 'Home',
                     svg: 'home',
-                    alignment: Alignment.centerLeft
+                    alignment: Alignment.center
                 ),
                 navItem(
                     id: 1,
@@ -123,12 +122,6 @@ class _AdminHubState extends State<AdminHub> {
                     svg: 'activity',
                     alignment: Alignment.center
                 ),
-                navItem(
-                    id: 2,
-                    title: 'Account',
-                    svg: 'account',
-                    alignment: Alignment.centerRight
-                )
               ],
             ),
           )
